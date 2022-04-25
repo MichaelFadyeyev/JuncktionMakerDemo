@@ -14,19 +14,26 @@ namespace JuncktionMakerDemo
     public partial class Form1 : Form
     {
         LocalizationManager localization = new LocalizationManager();
-        ToolStripMenuItem ttt = new ToolStripMenuItem();
+        ToolStripMenuItem optionsMenuItem = new ToolStripMenuItem();
+        ToolStripMenuItem langugeMenuItem = new ToolStripMenuItem();
+        ToolStripMenuItem aboutMenuItem = new ToolStripMenuItem();
         public Form1()
         {
             InitializeComponent();
+            optionsMenuItem.DropDownItems.AddRange(new ToolStripMenuItem[] { langugeMenuItem });
+            menuStrip.Items.AddRange(new ToolStripMenuItem[] { optionsMenuItem, aboutMenuItem });
+
+            LoadLocalizedUI();
+
+
+        }
+
+        private void LoadLocalizedUI()
+        {
             localization.SetLocalization("");
-            menuStrip.Items[0].Text = localization.MenuOptions;
-            menuStrip.Items[1].Text = localization.MenuAbout;
-            var qqq = menuStrip.Items[1] as ToolStripMenuItem;
-
-            ttt.DropDownItems.AddRange(new ToolStripItem[] { new ToolStripMenuItem("inner")});
-
-
-            //menuStrip.Items.Add(new ToolStripMenuItem(localization.MenuOptions));
+            optionsMenuItem.Text = localization.MenuOptions;
+            langugeMenuItem.Text = localization.MenuLanguage;
+            aboutMenuItem.Text = localization.MenuAbout;
 
             linkType.Text = localization.LinkType;
             modeSelect.DataSource = localization.Modes;
@@ -41,14 +48,10 @@ namespace JuncktionMakerDemo
                 OperationManager.TargetPath = "";
                 targetField.Clear();                
                 sourceField.Text = OperationManager.GetSourceItem();
-
         }
 
         private void targetButton_Click(object sender, EventArgs e)
         {
-            //if (junctionRadio.Checked || symbolicDirRadio.Checked)
-            //{
-            //}
             targetField.Text = OperationManager.GetTargetItem();
         }
 
@@ -58,7 +61,7 @@ namespace JuncktionMakerDemo
             try
             {
                 OperationManager.CreateLink();
-
+                ClearFields();
             }
             catch (Exception exception)
             {
@@ -69,6 +72,10 @@ namespace JuncktionMakerDemo
 
  
         private void clearButton_Click(object sender, EventArgs e)
+        {
+            ClearFields();
+        }
+        void ClearFields()
         {
             OperationManager.SourcePath = "";
             sourceField.Clear();

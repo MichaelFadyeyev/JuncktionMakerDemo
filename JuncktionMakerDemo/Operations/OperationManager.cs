@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-#pragma warning disable CS8604;
+using JuncktionMakerDemo.Localizations;
+#pragma warning disable CS8604
 
 namespace JuncktionMakerDemo.Operations
 {
     public static class OperationManager
     {
-        static string[] modes = new string[]
+        static readonly string[] modes = new string[]
         {
             "mklink /j",
             "mklink /h",
@@ -99,15 +100,11 @@ namespace JuncktionMakerDemo.Operations
                     $" \"{SourcePath}\" \"{TargetPath}\"";
             Process appProcess = new Process();
             appProcess.StartInfo = new ProcessStartInfo("cmd.exe");
-            appProcess.StartInfo.Arguments = @"/c /q" + str;
+            appProcess.StartInfo.Arguments = @"/c " + str;
             appProcess.Start();
 
 
         }
-
-        //    //MessageBox.Show(str, "Info!",
-        //    //    MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
 
         static void CopyFilesRecursively(string SourcePath, string TargetPath)
         {
